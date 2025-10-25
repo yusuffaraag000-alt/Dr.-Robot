@@ -265,6 +265,45 @@ window.addEventListener('resize', () => {
   height = canvas.height = window.innerHeight;
 });
 </script>
+<!-- Scroll buttons -->
+<button id="scrollUp" class="scroll-btn">⬆</button>
+<button id="scrollDown" class="scroll-btn">⬇</button>
+
+<style>
+.scroll-btn {
+  position: fixed;
+  right: 30px;
+  background-color: rgba(218,165,32,0.8);
+  border: none;
+  color: #000;
+  font-size: 24px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 100;
+  transition: background 0.3s;
+}
+.scroll-btn:hover {
+  background-color: #FFD700;
+}
+#scrollUp { bottom: 80px; }
+#scrollDown { bottom: 20px; }
+html {
+  scroll-behavior: smooth; /* smooth scrolling */
+}
+</style>
+<script>
+const scrollUpBtn = document.getElementById('scrollUp');
+const scrollDownBtn = document.getElementById('scrollDown');
+
+scrollUpBtn.addEventListener('click', () => {
+  window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+});
+
+scrollDownBtn.addEventListener('click', () => {
+  window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+});
+</script>
 
 </body>
 </html>

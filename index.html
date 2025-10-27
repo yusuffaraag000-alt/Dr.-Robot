@@ -16,194 +16,203 @@
 
 html, body {
   height: 100%;
-  background-color: #000;
-  overflow: hidden;
+  background: radial-gradient(circle at center, #000 60%, #090909 100%);
+  color: white;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
-/* Canvas for animated background */
+/* ====== Animated Background ====== */
 #backgroundCanvas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: -2;
+  background: radial-gradient(circle at bottom, #000, #111);
+  filter: blur(0.5px);
 }
 
-/* --- Main layout --- */
+/* ====== Container ====== */
 .container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  padding: 50px;
-}
-
-/* --- Logo on left --- */
-.logo-container {
-  flex: 0 0 350px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Floating effect for logo */
-@keyframes floatLogo {
-  0% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(-1deg); }
-  100% { transform: translateY(0) rotate(0deg); }
-}
-
-@keyframes pulseGlow {
-  0% { filter: drop-shadow(0 0 20px #FFD700); }
-  100% { filter: drop-shadow(0 0 30px #FFD700); }
-}
-
-.logo {
-  width: 500px;
-  max-width: 80%;
-  filter: drop-shadow(0 0 20px #FFD700);
-  animation: floatLogo 4s ease-in-out infinite, pulseGlow 2s ease-in-out infinite alternate;
-  transition: transform 0.5s;
-}
-
-.logo:hover {
-  transform: scale(1.1) rotate(-5deg);
-  animation: none;
-}
-
-/* --- Content on right --- */
-.content {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 100%;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 80px 20px;
+  animation: fadeInBody 2s ease forwards;
 }
 
+@keyframes fadeInBody {
+  0% { opacity: 0; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ====== Logo ====== */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.logo {
+  width: 350px;
+  max-width: 80%;
+  filter: drop-shadow(0 0 25px #FFD700);
+  animation: floatLogo 4s ease-in-out infinite, glowPulse 2s ease-in-out infinite alternate;
+  transition: all 0.5s ease;
+}
+
+@keyframes floatLogo {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+@keyframes glowPulse {
+  0% { filter: drop-shadow(0 0 20px #FFD700); }
+  100% { filter: drop-shadow(0 0 40px #FFD700); }
+}
+.logo:hover {
+  transform: scale(1.15) rotate(-5deg);
+  filter: drop-shadow(0 0 60px #FFD700);
+}
+
+/* ====== Title ====== */
 .title {
-  font-size: 60px;
+  font-size: 65px;
   font-weight: 700;
-  background: linear-gradient(90deg, #FFD700, #DAA520);
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #FFD700, #E0C16C, #DAA520);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 15px #D4AF37;
-  margin-bottom: 50px;
-  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 0 0 25px rgba(255,215,0,0.5);
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(-40px);
+  animation: slideDown 1.5s ease forwards 0.5s;
 }
 
+@keyframes slideDown {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====== Website Cards ====== */
 .main {
   display: flex;
-  gap: 30px;
+  gap: 35px;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 80px;
 }
 
 .site-card {
   width: 220px;
   height: 220px;
-  background: radial-gradient(circle, #222 0%, #111 100%);
-  border: 3px solid #D4AF37;
+  background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 100%);
+  border: 2px solid #FFD700;
   border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #FFD700;
-  text-align: center;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.4s ease;
-  position: relative;
   overflow: hidden;
-  text-decoration: none; /* إزالة خط الرابط */
+  position: relative;
+  cursor: pointer;
+  transform: translateY(30px);
+  opacity: 0;
+  animation: popUp 1s ease forwards;
+  transition: all 0.6s ease;
 }
 
-.site-card::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.site-card.show {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes popUp {
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .site-card:hover {
-  transform: scale(1.15) rotate(10deg);
-  box-shadow: 0 15px 40px rgba(218, 165, 32, 0.9);
+  transform: scale(1.18) rotate(6deg);
+  box-shadow: 0 0 40px rgba(255,215,0,0.8);
 }
 
-.site-card:hover::before {
-  width: 200px;
-  height: 200px;
+.site-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.7s ease;
 }
 
+.site-card:hover img {
+  transform: scale(1.2);
+  filter: brightness(1.15);
+}
+
+/* ====== Subtitle ====== */
 .subtitle {
+  margin-top: 40px;
   font-size: 24px;
   font-weight: 600;
   color: #FFD700;
-  text-shadow: 0 0 10px #D4AF37;
-  margin-top: 20px;
-  text-align: center;
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards 1.5s;
 }
 
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ====== Scrollbar Style ====== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FFD700, #B8860B);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFD700;
+}
+
+/* ====== Responsive ====== */
 @media (max-width: 1024px) {
-  .container {
-    flex-direction: column;
-    padding: 20px;
-  }
-  .logo-container {
-    margin-bottom: 40px;
-  }
-  .logo { width: 250px; }
-  .title { font-size: 50px; }
-  .site-card { width: 180px; height: 180px; font-size: 18px; }
+  .logo { width: 280px; }
+  .title { font-size: 48px; }
+  .site-card { width: 180px; height: 180px; }
 }
-
 @media (max-width: 600px) {
-  .logo { width: 180px; }
+  .logo { width: 200px; }
   .title { font-size: 36px; }
-  .site-card { width: 140px; height: 140px; font-size: 16px; }
+  .site-card { width: 140px; height: 140px; }
 }
 </style>
 </head>
+
 <body>
 
 <canvas id="backgroundCanvas"></canvas>
 
 <div class="container">
-  <!-- Logo -->
   <div class="logo-container">
     <img src="logo.jpg" alt="Logo" class="logo">
   </div>
 
-  <!-- Content -->
   <div class="content">
     <div class="title">Experimental Art Pieces</div>
     <div class="main">
       <a href="https://yusuffaraag000-alt.github.io/histology/" target="_blank" class="site-card">
-        <img src="1.jpg" alt="Website 1" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+        <img src="1.jpg" alt="Website 1">
       </a>
       <a href="https://yusuffaraag000-alt.github.io/The-farm/" target="_blank" class="site-card">
-        <img src="2.jpg" alt="Website 2" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+        <img src="2.jpg" alt="Website 2">
       </a>
       <a href="https://yusuffaraag000-alt.github.io/horse-bones-demo/" target="_blank" class="site-card">
-        <img src="3.jpg" alt="Website 3" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+        <img src="3.jpg" alt="Website 3">
       </a>
       <a href="https://yusuffaraag000-alt.github.io/The-Farm-Beef-/" target="_blank" class="site-card">
-        <img src="4.jpg" alt="Website 4" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+        <img src="4.jpg" alt="Website 4">
       </a>
     </div>
     <div class="subtitle">Robot Under Update</div>
@@ -211,99 +220,50 @@ html, body {
 </div>
 
 <script>
-// Animate cards entrance
-const cards = document.querySelectorAll('.site-card');
-cards.forEach((card, index) => {
-  setTimeout(() => { card.classList.add('show'); }, index * 200);
-});
-
-// Background animation
+// ====== Background gold dust effect ======
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+let w = canvas.width = window.innerWidth;
+let h = canvas.height = window.innerHeight;
 
 const particles = [];
-const particleCount = 150;
-
-function random(min, max) { return Math.random() * (max - min) + min; }
+const particleCount = 120;
+const rand = (min, max) => Math.random() * (max - min) + min;
 
 for (let i = 0; i < particleCount; i++) {
   particles.push({
-    x: random(0, width),
-    y: random(0, height),
-    r: random(1, 4),
-    dx: random(-0.5, 0.5),
-    dy: random(-0.5, 0.5),
-    alpha: random(0.3, 0.9),
-    dAlpha: random(0.002, 0.01),
-    color: Math.random() < 0.7 ? '#FFD700' : '#FFFFFF'
+    x: rand(0, w),
+    y: rand(0, h),
+    r: rand(1, 3),
+    dx: rand(-0.3, 0.3),
+    dy: rand(-0.3, 0.3),
+    alpha: rand(0.3, 0.9),
+    da: rand(0.005, 0.01)
   });
 }
 
 function animate() {
-  ctx.clearRect(0, 0, width, height);
-  for (let p of particles) {
+  ctx.clearRect(0, 0, w, h);
+  particles.forEach(p => {
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-    ctx.fillStyle = `rgba(${p.color === '#FFD700' ? '218,165,32' : '255,255,255'},${p.alpha})`;
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,215,0,${p.alpha})`;
     ctx.fill();
     p.x += p.dx;
     p.y += p.dy;
-    if(p.x<0||p.x>width)p.dx*=-1;
-    if(p.y<0||p.y>height)p.dy*=-1;
-    p.alpha += p.dAlpha;
-    if(p.alpha>0.9||p.alpha<0.3)p.dAlpha*=-1;
-  }
+    p.alpha += p.da;
+    if (p.alpha > 1 || p.alpha < 0.3) p.da *= -1;
+    if (p.x < 0 || p.x > w) p.dx *= -1;
+    if (p.y < 0 || p.y > h) p.dy *= -1;
+  });
   requestAnimationFrame(animate);
 }
-
 animate();
 
 window.addEventListener('resize', () => {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
 });
 </script>
-<!-- Scroll buttons -->
-<button id="scrollUp" class="scroll-btn">⬆</button>
-<button id="scrollDown" class="scroll-btn">⬇</button>
-
-<style>
-.scroll-btn {
-  position: fixed;
-  right: 30px;
-  background-color: rgba(218,165,32,0.8);
-  border: none;
-  color: #000;
-  font-size: 24px;
-  padding: 12px 16px;
-  cursor: pointer;
-  border-radius: 50%;
-  z-index: 100;
-  transition: background 0.3s;
-}
-.scroll-btn:hover {
-  background-color: #FFD700;
-}
-#scrollUp { bottom: 80px; }
-#scrollDown { bottom: 20px; }
-html {
-  scroll-behavior: smooth; /* smooth scrolling */
-}
-</style>
-<script>
-const scrollUpBtn = document.getElementById('scrollUp');
-const scrollDownBtn = document.getElementById('scrollDown');
-
-scrollUpBtn.addEventListener('click', () => {
-  window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
-});
-
-scrollDownBtn.addEventListener('click', () => {
-  window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
-});
-</script>
-
 </body>
 </html>

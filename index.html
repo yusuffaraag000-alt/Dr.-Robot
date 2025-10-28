@@ -14,7 +14,7 @@
     background-repeat: no-repeat;
     background-position: center center; /* مكان الصورة */
     background-size: 50%; /* حجم العلامة المائية */
-    opacity: 0.999; /* للتحكم في شفافية الصفحة كلها */
+    opacity: 0.95; /* للتحكم في شفافية الصفحة كلها */
   }
 
   /* نخلي الصورة شفافة بدون ما تأثر على المحتوى */
@@ -36,7 +36,6 @@
   }
 </style>
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 * {
@@ -50,11 +49,23 @@ html, body {
   height: 100%;
   background: radial-gradient(circle at center, #000 60%, #090909 100%);
   color: white;
-  overflow-x: hidden;
   scroll-behavior: smooth;
+  overflow-y: auto; /* ✅ السماح بالسكرول العمودي */
+  overflow-x: hidden;
 }
 
-/* ====== Animated Background ====== */
+/* ====== Watermark ====== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('logo.jpg') no-repeat center center;
+  background-size: 40%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+/* ====== Background Canvas ====== */
 #backgroundCanvas {
   position: fixed;
   top: 0;
@@ -72,7 +83,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 120vh; /* ✅ زوّدنا الطول علشان يقدر يظهر السكرول */
   padding: 80px 20px;
   animation: fadeInBody 2s ease forwards;
 }
@@ -195,7 +206,7 @@ html, body {
 
 /* ====== Scrollbar Style ====== */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 ::-webkit-scrollbar-track {
   background: #111;
@@ -203,6 +214,7 @@ html, body {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #FFD700, #B8860B);
   border-radius: 10px;
+  border: 2px solid #111;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #FFD700;

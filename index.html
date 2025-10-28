@@ -5,6 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Portfolio</title>
 <style>
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #000; /* لون الخلفية */
+    background-image: url('watermark.png'); /* ضع مسار الصورة هنا */
+    background-repeat: no-repeat;
+    background-position: center center; /* مكان الصورة */
+    background-size: 50%; /* حجم العلامة المائية */
+    opacity: 0.999; /* للتحكم في شفافية الصفحة كلها */
+  }
+
+  /* نخلي الصورة شفافة بدون ما تأثر على المحتوى */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('logo.jpg') no-repeat center center;
+    background-size: 40%;
+    opacity: 0.1; /* شفافية العلامة المائية */
+    z-index: -1; /* تبقى خلف كل المحتوى */
+  }
+
+  h1 {
+    color: gold;
+    text-align: center;
+    margin-top: 40vh;
+    font-family: 'Poppins', sans-serif;
+  }
+</style>
+<style>
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 * {
@@ -265,5 +297,6 @@ window.addEventListener('resize', () => {
   h = canvas.height = window.innerHeight;
 });
 </script>
+
 </body>
 </html>

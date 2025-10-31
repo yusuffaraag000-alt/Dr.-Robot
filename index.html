@@ -244,6 +244,7 @@ body::before {
 <div class="container">
   <div class="logo-container">
     <img src="logo.jpg" alt="Logo" class="logo">
+
   </div>
 
   <div class="content">
@@ -377,11 +378,80 @@ body {
 }
 
 </style>
-<script>
-  p.dx = rand(-0.5, 0.5);
-p.dy = rand(-0.5, 0.5);
-p.r = rand(0.8, 3.5);
-ctx.globalCompositeOperation = "lighter";
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #d4c4a0;
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
+  }
 
+  .robot-container {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    transform: translate(-150%, -50%);
+    opacity: 0;
+    transition: transform 2s ease, opacity 2s ease; /* نعومة الظهور والاختفاء */
+    will-change: transform, opacity;
+  }
+
+  .robot-container.show {
+    transform: translate(0, -50%);
+    opacity: 1;
+  }
+
+  .robot-container.hide {
+    transform: translate(-150%, -50%);
+    opacity: 0;
+  }
+
+  .robot-container img {
+    width: 320px;
+    height: auto;
+    filter: drop-shadow(0 0 15px rgba(212,196,160,0.5));
+  }
+
+  .robot-text {
+    font-size: 1.3rem;
+    color: #d4c4a0;
+    max-width: 400px;
+    text-shadow: 0 0 10px rgba(212,196,160,0.3);
+  }
+</style>
+</head>
+<body>
+
+<div class="robot-container" id="robotNotice">
+  <img src="logo2.png" alt="Dr Robot">
+  <div class="robot-text">
+    This work was made with limited experience<br>
+    and will pause for a while, returning in 2028.
+  </div>
+</div>
+
+<script>
+  const notice = document.getElementById("robotNotice");
+
+  // ظهور ناعم بعد نصف ثانية
+  setTimeout(() => {
+    notice.classList.add("show");
+  }, 500);
+
+  // بعد 5 ثواني من ظهوره يبدأ يختفي
+  setTimeout(() => {
+    notice.classList.remove("show");
+    notice.classList.add("hide");
+  }, 5500);
+
+  // بعد 7.5 ثانية يتم الإخفاء الكامل من الصفحة
+  setTimeout(() => {
+    notice.style.display = "none";
+  }, 7500);
 </script>
 </html>
